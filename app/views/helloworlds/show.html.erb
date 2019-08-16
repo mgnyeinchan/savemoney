@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @helloworld.name %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @helloworld.title %>
+</p>
+
+<%= link_to 'Edit', edit_helloworld_path(@helloworld) %> |
+<%= link_to 'Back', helloworlds_path %>
