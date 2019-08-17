@@ -1,2 +1,0 @@
-class Helloworld < ApplicationRecord
-end
