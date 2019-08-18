@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style type="text/css">
+	div.dailyexpbox{
+		background-color: #f2f2f2;margin:5%;
+		box-shadow: 4px 4px 15px black;
+		overflow: hidden;
+	}
+	@media only screen and (max-width: 600px) {
+		div.dailyexpbox{
+			min-width: 600px;
+			margin:0;
+		}
+		
+	}
+</style>
+</head>
+<body>
+	<%= render "navigation" %>
+	
+	<div class="dailyexpbox">
+		<h4 class="bg-warning" style="padding: 2%;">Advance</h4>
+		<div class="row " style="padding: 1%;">
+			<div class="col-1">
+				<b>No</b>
+			</div>
+			<div class="col-3">
+				<b>Description</b>
+			</div>
+			<div class="col-2">
+				<b>Deposit Amount</b>
+			</div>
+			<div class="col-2">
+				<b>Balance Amount</b>
+			</div>
+			<div class="col-2">
+				<b>Assigned By</b>
+			</div>
+
+			<div class="col-2">
+				<b>Date</b>
+			</div>
+		</div>
+		<% no = 0 %>
+		<% @advance.each do |adv| %>
+		<% no += 1 %>
+		
+		<div class="row " style="padding: 1%;background-color: white;">
+			<div class="col-1">
+				<b><%= no %></b>
+			</div>
+			<div class="col-3">
+				<b><%= adv.description %></b>
+			</div>
+			<div class="col-2">
+				<b><%= adv.amountdeposit %></b>
+			</div>
+			<div class="col-2">
+				<b><%= adv.currentamount %></b>
+			</div>
+			<div class="col-2">
+				<b><%= adv.user.name %></b>
+			</div>
+
+			<div class="col-2">
+				<b><%= adv.time %></b>
+			</div>
+		</div>
+		<% end %>
+		<% @totaladvance = 0 %>
+		<% @advance.each do |adv| %>
+			<% @totaladvance = @totaladvance + adv.amountdeposit  %>
+		<% end %>
+		<% @totalbalinadvance = 0 %>
+		<% @advance.each do |adv| %>
+			<% @totalbalinadvance = @totalbalinadvance + adv.currentamount  %>
+		<% end %>
+		<div class="row bg-danger" style="padding: 1%;color: white;" >
+			<div class="col-4">
+				Total
+			</div>
+			<div class="col-2">
+				<%= @totaladvance %>
+			</div>
+			<div class="col-2">
+				<%= @totalbalinadvance %>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

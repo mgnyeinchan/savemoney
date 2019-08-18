@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style type="text/css">
+	div.dailyexpbox{
+		background-color: #f2f2f2;margin:2% 5%;
+		box-shadow: 4px 4px 15px black;
+		overflow: hidden;
+	}
+	@media only screen and (max-width: 600px) {
+		div.dailyexpbox{
+			min-width: 600px;
+			margin:0;
+		}
+		
+	}
+</style>
+</head>
+<body>
+	<%= render "navigation" %>
+	<div class="dailyexpbox">
+		<h4 class="bg-warning" style="padding: 2%;">Today Other Expense Report</h4>
+		<div class="row " style="padding: 1%;">
+			<div class="col-8">
+				<b>Description</b>
+			</div>
+			<div class="col-2">
+				<b>Amount</b>
+			</div>
+			<div class="col-2">
+				<b>Assigned By</b>
+			</div>
+		</div>
+		<% @todayexps.each do |todayexp| %>
+		<input type="hidden" class="description" name="" value="<%= todayexp.description %>">
+	
+		<div class="row" style="background-color: white;padding: 1%;">
+			<div class="col-8">
+				<p class="demo"></p>
+			</div>
+			<div class="col-2">
+				<%= todayexp.amount %>
+			</div>
+			<div class="col-2">
+				<%= todayexp.user.name %>
+			</div>
+		</div>
+		<% end %>
+		<% @totalexpamount = 0 %>
+		<% @todayexps.each do |todayexp| %>
+			<% @totalexpamount += todayexp.amount %>
+		<% end %>
+		
+		<div class="row bg-danger" style="padding: 1%;color: white;" >
+			<div class="col-8">
+				Total Amount
+			</div>
+			<div class="col-2">
+				<%= @totalexpamount %>
+			</div>
+			<div class="col-2">
+				
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="dailyexpbox">
+		<h4 class="bg-warning" style="padding: 2%;">Today Expense Report in advance</h4>
+		<div class="row " style="padding: 1%;">
+			<div class="col-3">
+				<b>Description</b>
+			</div>
+			<div class="col-2">
+				<b>Amount</b>
+			</div>
+			<div class="col-3">
+				<b>Advance Description</b>
+			</div>
+			<div class="col-2">
+				<b>Assigned By</b>
+			</div>
+			<div class="col-2">
+				<b>Time</b>
+			</div>
+		</div>
+		<% @todayexpfadvs.each do |todayexpfadv| %>
+		<input type="hidden" class="description" name="" value="<%= todayexpfadv.description %>">
+	
+		<div class="row" style="background-color: white;padding: 1%;">
+			<div class="col-3">
+				<p class="demo"></p>
+			</div>
+			<div class="col-2">
+				<%= todayexpfadv.amount %>
+			</div>
+			<div class="col-3">
+				<%= todayexpfadv.advance.description %>
+			</div>
+			<div class="col-2">
+				<%= todayexpfadv.user.name %>
+			</div>
+			<div class="col-2">
+				<%= todayexpfadv.time %>
+			</div>
+		</div>
+		<% end %>
+		<% @totalexpfadvamount = 0 %>
+		<% @todayexpfadvs.each do |todayexpfadv| %>
+			<% @totalexpfadvamount += todayexpfadv.amount %>
+		<% end %>
+		
+		<div class="row bg-danger" style="padding: 1%;color: white;" >
+			<div class="col-3">
+				Total Amount
+			</div>
+			<div class="col-2">
+				<%= @totalexpfadvamount %>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<% @totaladvance = 0 %>
+	<% @advance.each do |adv| %>
+		<% @totaladvance = @totaladvance + adv.amountdeposit  %>
+	<% end %>
+	
+	<% @totalbalinadvance = 0 %>
+	<% @advance.each do |adv| %>
+		<% @totalbalinadvance = @totalbalinadvance + adv.currentamount  %>
+	<% end %>
+
+	<% @totalexpamount = 0 %>
+	<% @thismonthexps.each do |thismonthexp| %>
+		<% @totalexpamount += thismonthexp.amount %>
+	<% end %>
+	
+	<% @totalexpfadvamount = 0 %>
+	<% @thismonthexpfadvs.each do |thismonthexpfadv| %>
+		<% @totalexpfadvamount += thismonthexpfadv.amount %>
+	<% end %>
+
+	<div class="dailyexpbox">
+		<h4 class="bg-warning" style="padding: 2%;">This Month Expense Report</h4>
+		<div class="row " style="padding: 1%;">
+			<div class="col-2">
+				<b>Total Advance</b>
+			</div>
+			<div class="col-2">
+				<b>Total Balance in Advance</b>
+			</div>
+			<div class="col-2">
+				<b>Total Advance Expense </b>
+			</div>
+			<div class="col-2">
+				<b>Total Other Expense</b>
+			</div>
+			<div class="col-2">
+				<b>Total Expense</b>
+			</div>
+			<div class="col-2">
+				<b>Today Date</b>
+			</div>
+		</div>
+		
+		
+		<div class="row bg-danger" style="padding: 1%;color: white;" >
+			<div class="col-2">
+				<%= @totaladvance %>
+			</div>
+			<div class="col-2">
+				<%= @totalbalinadvance %>
+			</div>
+			<div class="col-2">
+				<%= @totalexpfadvamount %>
+			</div>
+			<div class="col-2">
+				<%= @totalexpamount %>
+			</div>
+			<div class="col-2">
+				<%= @totalexpfadvamount + @totalexpamount %>
+			</div>
+			<div class="col-2">
+				<%= DateTime.now.to_date%>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	var length = document.getElementsByClassName("description").length;
+	var i;
+	for(i=0;i<length;i++){
+		document.getElementsByClassName("demo")[i].innerHTML = document.getElementsByClassName("description")[i].value.replace(/\n/g, '<br>');
+	}
+	
+</script>
+</body>
+</html>

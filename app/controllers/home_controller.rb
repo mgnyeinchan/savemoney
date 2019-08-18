@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
 	def index
-		render html:"hello world"
+		@advances = Advance.all
 	end
 end

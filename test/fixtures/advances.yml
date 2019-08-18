@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  amountdeposit: 1
+  currentamount: 1
+  user_id: 1
+  time: 2019-08-17
+
+two:
+  description: MyString
+  amountdeposit: 1
+  currentamount: 1
+  user_id: 1
+  time: 2019-08-17

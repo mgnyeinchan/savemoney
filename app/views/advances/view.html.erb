@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<%= render "navigation" %>
+	
+	<input type="hidden" id="description" name="" value="<%= @advance.description %>">
+	
+	<table class="table table-striped" style="background-color: #f2f2f2;margin:5%;box-shadow: 4px 4px 15px black;">
+		<tr>
+			<th>No</th>
+			<th>Description</th>
+			<th>Amount</th>
+			<th>Date</th>
+		</tr>
+		<tr>
+			<th>1</th>
+			<th><p id="demo"></p></th>
+			<th><%= @advance.amountdeposit %></th>
+			<th><%= @advance.time %></th>
+		</tr>
+
+	</table>
+<script type="text/javascript">
+	document.getElementById("demo").innerHTML = document.getElementById("description").value.replace(/\n/g, '<br>');
+</script>
+</body>
+</html>

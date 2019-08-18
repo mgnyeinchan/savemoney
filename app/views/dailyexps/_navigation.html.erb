@@ -1,0 +1,166 @@
+<style type="text/css">
+  #usernav{
+      display: none;
+  }
+  @media only screen and (max-width: 600px) {
+      li.navli{
+      text-align: center;
+      display: block;
+      margin: 0 auto;
+    }
+    .form-inline{
+      display: none;
+    }
+    #usernav{
+      display: block;
+    }
+    #logo{
+      display: none;
+    }
+    #usernav2{
+      display: none;
+    }
+
+  }
+</style>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="#" id="logo"><%= image_tag("moneylogo.png",style:"display:block;margin:0 auto;width:40px;opacity:1;") %></a>
+  <a id="usernav" class="navbar-brand dropdown-toggle" href="#" style="color:white;" id="navbardrop" data-toggle="dropdown">
+        <%= image_tag("moneylogo.png",style:"display:block;margin:0 auto;width:40px;opacity:1;float:left;padding-right:10px;") %><i class="fa fa-user text-success" style="font-size: 24px;"></i> <span class="text-success" style="font-size: 18px;"><%= session[:user]["name"] %></span>
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" class="dropdown-item" data-toggle="modal" data-target="#changepwd" style="color:black;cursor: pointer;"><i class="fa fa-key text-success" style="font-size: 24px;"></i>&nbspChange Password</a>
+        <a class="dropdown-item" href="/logout" style="color:black;"><i class="fa fa-sign-out text-danger" style="font-size: 24px;"></i>&nbspLOG OUT</a>
+      </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <!-- Dropdown -->
+    <li class="navli nav-item dropdown" id="usernav2">
+
+      <a class="nav-link dropdown-toggle" href="#" style="color:white;" id="navbardrop" data-toggle="dropdown">
+        <i class="fa fa-user text-success" style="font-size: 24px;"></i> <span class="text-success"><%= session[:user]["name"] %></span>
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" class="dropdown-item" data-toggle="modal" data-target="#changepwd" style="color:black;cursor: pointer;"><i class="fa fa-key text-success" style="font-size: 24px;"></i>&nbspChange Password</a>
+        <a class="dropdown-item" href="/logout" style="color:black;"><i class="fa fa-sign-out text-danger" style="font-size: 24px;"></i>&nbspLOG OUT</a>
+      </div>
+    </li>
+
+    
+    <!-- Dropdown -->
+    <li class="navli nav-item dropdown">
+
+      <a class="nav-link dropdown-toggle" href="#" style="color:white;" id="navbardrop" data-toggle="dropdown">
+        <i class="fa fa-balance-scale text-warning" style="font-size: 24px;"></i>&nbspFM
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/createadvance" style="color:black;"><i class="fa fa-plus text-success" style="font-size: 24px;"></i>&nbspCreate Advance  </a>
+        <a class="dropdown-item" href="/" style="color:black;"><i class="fa fa-plus text-success" style="font-size: 24px;"></i>&nbspCreate Daily Expense  </a>
+        <a class="dropdown-item" data-toggle="modal" data-target="#makeaudit" style="color:black;cursor: pointer;"><i class="fa fa-calculator text-warning" style="font-size: 24px;"></i>&nbspMake Monthly Audit</a>
+      </div>
+    </li>
+    <!-- Dropdown -->
+    <li class="navli nav-item dropdown">
+
+      <a class="nav-link dropdown-toggle" href="#" style="color:white;" id="navbardrop" data-toggle="dropdown">
+        <%= image_tag("report.png",style:"width:24px;background-color:white;") %>&nbspReports
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/advancereports" style="color:black;"><%= image_tag("report.png",style:"width:24px;") %>&nbspAdvance Report  </a>
+        <a class="dropdown-item" href="/expensereports" style="color:black;"><%= image_tag("report.png",style:"width:24px;") %>&nbsp Expense Report  </a>
+        <a class="dropdown-item" href="/monthlyauditreports" style="color:black;"><%= image_tag("report.png",style:"width:24px;") %>&nbspMonthly Audit Report</a>
+      </div>
+    </li>
+
+    <!-- Dropdown -->
+    <li class="navli nav-item dropdown">
+
+      <a class="nav-link dropdown-toggle" href="#" style="color:white;" id="navbardrop" data-toggle="dropdown">
+        <%= image_tag("moneylogo2.png",style:"width:28px;") %>&nbspSaveMoney
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/savemoney" style="color:black;"><%= image_tag("savemoneylogo.png",style:"width:28px;") %>&nbspSaveMoney  </a>
+        <a class="dropdown-item " href="/mysavingaccount" style="color:black;">&nbsp<i class="fa fa-user text-warning" style="font-size: 28px;"></i>&nbsp My Saving Account  </a>
+        <a class="dropdown-item" href="/familysharingaccounts" style="color:black;"><%= image_tag("sharing.png",style:"width:28px;") %>&nbspFamily Saving Accounts</a>
+      </div>
+    </li>
+
+    <li class="navli nav-item">
+      <a class="nav-link" href="#" style="color:white;">Link 2</a>
+    </li>
+    
+    <form class="form-inline" action="/action_page.php">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button class="btn btn-success" type="submit">Search</button>
+    </form>    
+    </ul>
+  </div>  
+</nav>
+
+<!-- The Modal -->
+  <div class="modal fade" id="makeaudit">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-danger" style="color: white;">
+          <h4 class="modal-title">Monthly Audit</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            Are you sure to make monthly audit?
+            If you make audit, the data of the tomorrow will enter into the next month record.
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <a href="/makeaudit"><button class="btn btn-success">OK</button></a>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <!-- The Modal -->
+  <div class="modal fade" id="changepwd">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header bg-success" style="color: white;">
+          <h4 class="modal-title">Change your password</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <%= form_tag("/changepassword", method: "post",id:"dailyexpform") do %>
+            <div class="form-group">
+              <input type="password" class="form-control" name="currentpassword" placeholder="Type Current Password" required="">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="newpwd" placeholder="Type New Password" required="">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="confirmnewpwd" placeholder="Confirm New Password" required="">
+            </div>
+            
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <input type="submit" name="submit" class="btn btn-success" value="Change">
+          <% end %>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>

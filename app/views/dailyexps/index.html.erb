@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<input type="hidden" id="description" name="" value="<%= @description%>">
+	<p id="demo"></p>
+<script type="text/javascript">
+	document.getElementById("demo").innerHTML = document.getElementById("description").value.replace(/\n/g, '<br>');
+</script>
+</body>
+</html>

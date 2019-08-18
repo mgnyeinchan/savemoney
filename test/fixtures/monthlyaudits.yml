@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  totaldepositamt: 1
+  totalbalamt: 1
+  totalexpamt: 1
+  totalotherexp: 1
+  user_id: 1
+  time: 2019-08-18
+
+two:
+  totaldepositamt: 1
+  totalbalamt: 1
+  totalexpamt: 1
+  totalotherexp: 1
+  user_id: 1
+  time: 2019-08-18

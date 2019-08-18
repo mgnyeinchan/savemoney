@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style type="text/css">
+	div.dailyexpbox{
+		background-color: white;margin:2% 5%;
+		box-shadow: 4px 4px 15px black;
+		overflow: hidden;
+	}
+</style>
+</head>
+<body>
+	<%= render "navigation" %>
+	<div  style="margin:2% 5%;font-size: 24px;"><%= image_tag("sharing.png",style:"width:44px;") %>&nbspFamily sharing Accounts</div style="">
+	<% @tmp.each do |tmp| %>
+			<% savemoneys = Savemoney.where(:user_id => tmp).where('extract(month  from time) = ?',Time.now.month ) %>
+			<div>
+				<% user = User.find(tmp) %>
+				<div class="dailyexpbox" style="">
+				<h5 class="bg-info" style="padding: 2%;color: white"><i class="fa fa-user" style="font-size: 28px;color:white"></i>&nbsp<%= user.name %></h5>
+		
+				<div class="row " style="padding: 1%;background-color: #f2f2f2;margin-top: -12px;">
+							
+							<div class="col-4">
+								<b>Description</b>
+							</div>
+							<div class="col-4">
+								<b>Amount</b>
+							</div>
+							<div class="col-4">
+								<b>Date</b>
+							</div>
+				</div>
+				<% savemoneys.each do |sm| %>
+						<div class="row " style="padding: 1%;background-color: white;">
+							
+							<div class="col-4">
+								<% if sm.description == "" %>
+									nil
+								<% else %>
+									<%= sm.description %>
+								<% end %>
+							</div>
+							<div class="col-4">
+								<%= sm.amount %>
+							</div>
+							<div class="col-4">
+								<%= sm.time %>
+							</div>
+						</div>
+						
+					
+				<% end %>
+				</div>
+			</div>
+			<hr>
+	<% end %>
+</body>
+</html>

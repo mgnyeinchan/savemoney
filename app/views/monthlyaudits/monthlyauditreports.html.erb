@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style type="text/css">
+	div.dailyexpbox{
+		background-color: #f2f2f2;margin:2% 5%;
+		box-shadow: 4px 4px 15px black;
+		overflow: hidden;
+	}
+
+	@media only screen and (max-width: 900px) {
+		div.dailyexpbox{
+			min-width: 900px;
+			margin:0;
+		}
+		
+	}
+</style>
+</head>
+<body>
+	<%= render "navigation" %>
+	
+	<div class="dailyexpbox">
+		<h4 class="bg-success" style="padding: 2%;color: white">Monthy Audit Report</h4>
+		<div class="row " style="padding: 1%;">
+			<div class="col-1">
+				<b>No</b>
+			</div>
+			<div class="col-2">
+				<b>Total Advance Amount</b>
+			</div>
+			<div class="col-2">
+				<b>Total Balance Amount</b>
+			</div>
+			<div class="col-2">
+				<b>Total Advance Expense Amount</b>
+			</div>
+			<div class="col-2">
+				<b>Total Other Expense Amount</b>
+			</div>
+
+			<div class="col-1">
+				<b>Total Expense</b>
+			</div>
+			<div class="col-1">
+				<b>Assigned by</b>
+			</div>
+			<div class="col-1">
+				<b>Months</b>
+			</div>
+		</div>
+		<% no = 0 %>
+		<% @monthlyaudit.each do |ma| %>
+		<% no += 1 %>
+		
+		<div class="row " style="padding: 1%;background-color: white;">
+			<div class="col-1">
+				<%= no %>
+			</div>
+			<div class="col-2">
+				<%= ma.totaldepositamt %>
+			</div>
+			<div class="col-2">
+				<%= ma.totalbalamt %>
+			</div>
+			<div class="col-2">
+				<%= ma.totalexpamt %>
+			</div>
+			<div class="col-2">
+				<%= ma.totalotherexp %>
+			</div>
+
+			<div class="col-1 text-danger">
+				<%= ma.totalexpamt + ma.totalotherexp %>
+			</div>
+			<div class="col-1">
+				<%= ma.user.name %>
+			</div>
+			<div class="col-1">
+				<% datestr = ma.time.to_s
+				   datearr = datestr.split("-")
+				%>
+				<% case datearr[1] 
+					when "01"
+						%>January<%
+					when "02"
+						%>Februry<%
+					when "03"
+						%>March<%
+					when "04"
+						%>April<%
+					when "05"
+						%>May<%
+					when "06"
+						%>June<%
+					when "07"
+						%>July<%
+					when "08"
+						%>Augest<%
+					when "09"
+						%>September<%
+					when "10"
+						%>October<%
+					when "11"
+						%>November<%
+					else
+						%>December<%
+					end
+				%>
+
+			</div>
+		</div>
+		<% end %>
+
+		
+	</div>
+</body>
+</html>

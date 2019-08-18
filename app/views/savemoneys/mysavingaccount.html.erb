@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style type="text/css">
+	div.dailyexpbox{
+		background-color: white;margin:5%;
+		box-shadow: 4px 4px 15px black;
+		overflow: hidden;
+	}
+	fieldset 
+	{
+		border: 1px solid #ddd !important;
+		margin: 2%;
+		xmin-width: 0;
+		padding: 10px;       
+		position: relative;
+		border-radius:4px;
+		background-color:#f5f5f5;
+		padding-left:10px!important;
+
+	}	
+	
+	legend
+	{
+		font-size:14px;
+		font-weight:bold;
+		margin-bottom: 0px; 
+		width: 35%; 
+		border: 1px solid #ddd;
+		border-radius: 4px; 
+		padding: 5px 5px 5px 10px; 
+		background-color: #ffffff;
+	}
+	.sharetobtn{
+		box-shadow: 4px 4px 8px grey;
+		border-radius: 15px;
+	}
+
+	.removesharing{
+		box-shadow: 4px 4px 8px grey;
+		border-radius: 15px;
+	}
+	.removesharing:hover{
+		background-color: #f2f2f2;
+	}
+	@media only screen and (max-width: 600px) {
+		div.dailyexpbox{
+			min-width: 600px;
+			margin:0;
+		}
+		
+	}
+</style>
+</head>
+<body>
+	<%= render "navigation" %>
+	
+	<div class="dailyexpbox">
+		<h4 class="bg-warning" style="padding: 2%;">My Saving Account</h4>
+		<fieldset class="col-md-6">    	
+					<legend><%= image_tag("family.png",style:"width:28px;") %>&nbspFamily Sharing</legend>
+					
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-4">
+									<% if @savemoney.showto1 %>
+									<i class="fa fa-share-alt-square text-success" style="font-size: 28px;"></i>&nbsp
+											<% user1 = User.find(@savemoney.showto1) %>
+											<span class="text-success" style="font-size: 18px;"><%= user1.name %>&nbsp&nbsp</span>
+											<hr>
+											<a style="text-decoration:none;" href="/removesharing/1">
+											<button class="form-control removesharing"><i class="fa fa-times-circle text-danger" style="font-size: 20px;"></i><span style="font-size: 16px;">REMOVE</span></button></a>
+											
+										
+									<% else %>
+									<i class="fa fa-share-alt-square text-default" style="font-size: 28px;"></i>&nbsp
+										Share To 
+										<hr>
+										<%= form_tag("/assignshare/1", method: "post",id:"assignform1") do %>
+										<select name="showto1" class="form-control btn btn-default sharetobtn" onchange="assignform1()">
+											<option>&nbspSelect user</option>
+											<% @users.each do |user| %>
+												<option value="<%= user.id %>"><%= user.name %></option>
+											<% end %>
+										</select>
+										<% end %>
+									<% end %>	
+								</div>
+								<div class="col-4">
+									<% if @savemoney.showto2 %>
+									<i class="fa fa-share-alt-square text-success" style="font-size: 28px;"></i>&nbsp
+											<% user1 = User.find(@savemoney.showto2) %>
+											<span class="text-success" style="font-size: 18px;"><%= user1.name %>&nbsp&nbsp</span>
+											<hr>
+											<a style="text-decoration:none;" href="/removesharing/2">
+											<button class="form-control removesharing"><i class="fa fa-times-circle text-danger" style="font-size: 20px;"></i><span style="font-size: 16px;">REMOVE</span></button></a>
+											
+										
+									<% else %>
+									<i class="fa fa-share-alt-square text-default" style="font-size: 28px;"></i>&nbsp
+										Share To 
+										<hr>
+										<%= form_tag("/assignshare/2", method: "post",id:"assignform2") do %>
+										<select name="showto2" class="form-control btn btn-default sharetobtn" onchange="assignform2()">
+											<option>&nbspSelect user</option>
+											<% @users.each do |user| %>
+												<option value="<%= user.id %>"><%= user.name %></option>
+											<% end %>
+										</select>
+										<% end %>
+									<% end %>	
+								</div>
+								<div class="col-4">
+									<% if @savemoney.showto3 %>
+									<i class="fa fa-share-alt-square text-success" style="font-size: 28px;"></i>&nbsp
+											<% user1 = User.find(@savemoney.showto3) %>
+											<span class="text-success" style="font-size: 18px;"><%= user1.name %>&nbsp&nbsp</span>
+											<hr>
+											<a style="text-decoration:none;" href="/removesharing/3">
+											<button class="form-control removesharing"><i class="fa fa-times-circle text-danger" style="font-size: 20px;"></i><span style="font-size: 16px;">REMOVE</span></button></a>
+											
+										
+									<% else %>
+									<i class="fa fa-share-alt-square text-default" style="font-size: 28px;"></i>&nbsp
+										Share To 
+										<hr>
+										<%= form_tag("/assignshare/3", method: "post",id:"assignform3") do %>
+										<select name="showto3" class="form-control btn btn-default sharetobtn" onchange="assignform3()">
+											<option>&nbspSelect user</option>
+											<% @users.each do |user| %>
+												<option value="<%= user.id %>"><%= user.name %></option>
+											<% end %>
+										</select>
+										<% end %>
+									<% end %>	
+								</div>
+							</div>
+						</div>
+					</div>
+					
+		</fieldset>				
+		<div class="row " style="padding: 1%;background-color: #f2f2f2;">
+			<div class="col-3">
+				<b>No</b>
+			</div>
+			<div class="col-3">
+				<b>Description</b>
+			</div>
+			<div class="col-3">
+				<b>Amount</b>
+			</div>
+			<div class="col-3">
+				<b>Date</b>
+			</div>
+		</div>
+		<% no = 0 %>
+		<% @savemoneys.each do |sm| %>
+		<% no += 1 %>
+		<div class="row " style="padding: 1%;background-color: white;">
+			<div class="col-3">
+				<%= no %>
+			</div>
+			<div class="col-3">
+				<%= sm.description %>
+			</div>
+			<div class="col-3">
+				<%= sm.amount %>
+			</div>
+			<div class="col-3">
+				<%= sm.time %>
+			</div>
+		</div>
+		<% end %>
+	</div>
+<script type="text/javascript">
+	function assignform1(){
+		document.getElementById('assignform1').submit();
+	}
+	function assignform2(){
+		document.getElementById('assignform2').submit();
+	}
+	function assignform3(){
+		document.getElementById('assignform3').submit();
+	}
+</script>
+</body>
+</html>
