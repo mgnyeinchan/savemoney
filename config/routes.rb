@@ -44,5 +44,13 @@ Rails.application.routes.draw do
   get "/removesharing/:id",to:"savemoneys#removesharing"
 
   get "/familysharingaccounts",to:"savemoneys#familysharingaccounts"
-  
+
+  get "/withdraw",to:"savemoneys#withdraw"
+  post "/withdraw",to:"savemoneys#savewithdraw"
+
+  #user management
+  get "/usermanagement",to:"users#usermanagement"
+  get "/setadmin/:uid",to:"users#setadmin"
+  get "/canceladmin/:uid",to:"users#canceladmin"
+  get "/delusr/:uid",to:"users#delusr"
 end

@@ -34,9 +34,9 @@ Rails.application.configure do
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
+  #heroku
   host = 'savethemoney.herokuapp.com' # ここをコピペすると失敗します。自分の環境に合わせてください。
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
-
   config.active_record.verbose_query_logs = true
 
   # Raise an error on page load if there are pending migrations.

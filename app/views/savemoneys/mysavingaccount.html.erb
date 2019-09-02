@@ -55,10 +55,21 @@
 </head>
 <body>
 	<%= render "navigation" %>
-	
+	<% total = 0 %>
+	<% @savemoneys.each do |sm| %>
+		<% total += sm.amount %>
+	<% end %>
+
+	<% withdrawtotal = 0 %>
+	<% @withdraw.each do |withdraw| %>
+		<% withdrawtotal += withdraw.amount.to_i %>
+	<% end %>	
+
 	<div class="dailyexpbox">
 		<h4 class="bg-warning" style="padding: 2%;">My Saving Account</h4>
-		<fieldset class="col-md-6">    	
+		<div class="row">
+		<div class="col-md-6">
+		<fieldset >    	
 					<legend><%= image_tag("family.png",style:"width:28px;") %>&nbspFamily Sharing</legend>
 					
 					<div class="panel panel-default">
@@ -140,7 +151,39 @@
 						</div>
 					</div>
 					
-		</fieldset>				
+		</fieldset>	
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-6">
+					<div class="container" >
+					<div class="card" style="box-shadow: 4px 4px 8px #f2f2f2;width: 80%;height: 175px;">
+						<div style="position: relative;top: 50%;">
+							<div style="transform: translate(0,-100%);">
+								<div class="text-success" style="text-align: center;font-size: 28px;"><%= total %> Kyats</div>
+								
+							</div>
+						</div>
+						<div class="bg-success" style="text-align: center;color: white;position: absolute;bottom: 0;padding: 5px;">This Month Saving Mount</div>
+					</div>
+				</div>
+				</div>
+				<div class="col-6">
+					<div class="container" >
+					<div class="card" style="box-shadow: 4px 4px 8px #f2f2f2;width: 80%;height: 175px;">
+						<div style="position: relative;top: 50%;">
+							<div style="transform: translate(0,-100%);">
+								<div class="text-success" style="text-align: center;font-size: 28px;"><%= withdrawtotal %> Kyats</div>
+								
+							</div>
+						</div>
+						<div class="bg-danger" style="text-align: center;color: white;position: absolute;bottom: 0;padding: 5px;">This Month Saving Mount</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>	
+		</div>		
 		<div class="row " style="padding: 1%;background-color: #f2f2f2;">
 			<div class="col-3">
 				<b>No</b>
@@ -156,7 +199,9 @@
 			</div>
 		</div>
 		<% no = 0 %>
+		<% total = 0 %>
 		<% @savemoneys.each do |sm| %>
+		<% total += sm.amount %>
 		<% no += 1 %>
 		<div class="row " style="padding: 1%;background-color: white;">
 			<div class="col-3">
@@ -173,6 +218,64 @@
 			</div>
 		</div>
 		<% end %>
+		<div class="row text-success " style="padding: 1%;border-top: 1px solid #f2f2f2;">
+			<div class="col-6">
+				Total
+			</div>
+			<div class="col-3">
+				<%= total %>
+			</div>
+			<div class="col-3">
+			</div>
+		</div>
+	</div>
+
+	<div class="dailyexpbox">
+		<h4 class="bg-danger" style="padding: 2%;">Withdraw</h4>
+		<div class="row " style="padding: 1%;background-color: #f2f2f2;">
+			<div class="col-3">
+				<b>No</b>
+			</div>
+			<div class="col-3">
+				<b>Description</b>
+			</div>
+			<div class="col-3">
+				<b>Amount</b>
+			</div>
+			<div class="col-3">
+				<b>Date</b>
+			</div>
+		</div>
+		<% no = 0 %>
+		<% withdrawtotal = 0 %>
+		<% @withdraw.each do |withdraw| %>
+		<% withdrawtotal += withdraw.amount.to_i %>
+		<% no += 1 %>
+		<div class="row " style="padding: 1%;background-color: white;">
+			<div class="col-3">
+				<%= no %>
+			</div>
+			<div class="col-3">
+				<%= withdraw.description %>
+			</div>
+			<div class="col-3">
+				<%= withdraw.amount %>
+			</div>
+			<div class="col-3">
+				<%= withdraw.time %>
+			</div>
+		</div>
+		<% end %>
+		<div class="row text-danger " style="padding: 1%;border-top: 1px solid #f2f2f2;">
+			<div class="col-6">
+				Total
+			</div>
+			<div class="col-3">
+				<%= withdrawtotal %>
+			</div>
+			<div class="col-3">
+			</div>
+		</div>
 	</div>
 <script type="text/javascript">
 	function assignform1(){

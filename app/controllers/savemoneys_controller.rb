@@ -13,8 +13,9 @@ class SavemoneysController < ApplicationController
   		end
   end
   def mysavingaccount
-  	@savemoneys = Savemoney.where(:user_id => session[:user]["id"]) 
+  	@savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   	@savemoney = Savemoney.find_by(user_id:session[:user]["id"])
+    @withdraw = Withdraw.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   	if @savemoney
   		
   	else
@@ -112,5 +113,16 @@ class SavemoneysController < ApplicationController
   				end
 			end
   		end
+  end
+  def withdraw
+    
+  end
+  def savewithdraw
+      withdraw = Withdraw.new(description:params[:description],amount:params[:amount],user_id:session[:user]["id"],time:DateTime.now.to_date)
+      if withdraw.save
+          flash[:success] ="Successfully withdraw !"
+          redirect_to "/withdraw"
+      end
+    
   end
 end

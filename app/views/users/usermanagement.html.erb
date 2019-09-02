@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Administration Page</title>
+</head>
+<body>
+	
+	<%= render "navigation" %>
+	<div style="background-color: rgb(60,60,60,0.5);margin: 2%;">
+		<h4 style="padding: 1%;color:lightblue;">Administration</h4>
+		<table class="table" style="background-color: white;">
+			<tr>
+				<th style="background-color:#EEE;color:black;">No</th>
+				<th style="background-color:#EEE;color:black;">User Name</th>
+				<th style="background-color:#EEE;color:black;">Email</th>
+				<th style="background-color:#EEE;color:black;">Admin</th>
+				<th style="background-color:#EEE;color:black;">Assign</th>
+				<th style="background-color:#EEE;color:black;">User Delete</th>
+			</tr>
+			<% no = 0 %>
+			<% @users.each do |u| %>
+				<% no += 1 %>
+				<tr>
+					<td><%= no %></td>
+					<td><%= u.name %></td>
+					<td><%= u.email %></td>
+					<td><b><i class="fa fa-user"></i>ADMIN</b></td>
+					<td>
+						<% if u.role ==1 %>
+							<a href="/canceladmin/<%= u.id %>"><button class="btn btn-danger"  style="min-width: 100px; ">CANCEL ADMIN</button>
+						<% else %>
+							<a href="/setadmin/<%= u.id %>"><button class="btn btn-success"  style="min-width: 100px; ">SET ADMIN</button>
+						<% end %>
+					</td>
+					<td><%= form_tag("/delusr/#{u.id}", method: "post") do %>
+								<a href="/delusr/<%= u.id %>" ><button class="btn btn-danger"  style="min-width: 100px; "><i class="fa fa-trash text-default" style="font-size: 24px;"></i></button></a>
+							<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</body>
+</html>

@@ -5,4 +5,5 @@ class User < ApplicationRecord
 	has_many :advances
 	has_many :monthlyaudits
 	has_many :savemoneys
+	has_many :withdraws
 end
