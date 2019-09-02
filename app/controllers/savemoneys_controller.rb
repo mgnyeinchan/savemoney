@@ -5,7 +5,7 @@ class SavemoneysController < ApplicationController
   			if sm.save
 
   				flash[:successfullysavemoney] = "Successfully Saving Money !"
-  				redirect_to "/savemoney"
+  				redirect_to "/mysavingaccount"
   			else
   				flash[:insertingerror] = "Inserting Error !"
   				redirect_to "/savemoney"
@@ -20,7 +20,7 @@ class SavemoneysController < ApplicationController
   		
   	else
   		flash[:savemoneyfirst] = "You need to save money first to view saving data."
-  		redirect_to "/"
+  		redirect_to "/savemoney"
   	end
   	@users = User.all
   end
@@ -121,7 +121,7 @@ class SavemoneysController < ApplicationController
       withdraw = Withdraw.new(description:params[:description],amount:params[:amount],user_id:session[:user]["id"],time:DateTime.now.to_date)
       if withdraw.save
           flash[:success] ="Successfully withdraw !"
-          redirect_to "/withdraw"
+          redirect_to "/mysavingaccount"
       end
     
   end

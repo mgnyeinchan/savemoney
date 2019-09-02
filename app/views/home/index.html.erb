@@ -37,6 +37,9 @@
 	#usernav{
 			display: none;
 	}
+	#def{
+		display: block;
+	}
 	#dailyexpfadvform{
 		display: none;
 	}
@@ -166,7 +169,7 @@
 							<% end %>
 							
 						</select>
-			<%= form_tag("/createdailyexp", method: "post",id:"dailyexpform") do %>
+			<%= form_tag("/createdailyexp", method: "post",id:"def") do %>
 
 						<div class="form-group">
 						<label>Description</label>
@@ -214,7 +217,7 @@
 <script type="text/javascript">
 	function changedirofform(a){
 		document.getElementById('dailyexpfadvform').style.display = "block";
-		document.getElementById('dailyexpform').style.display = "none";
+		document.getElementById('def').style.display = "none";
 		document.getElementById("advance_id").value = a.value;
 
 	}

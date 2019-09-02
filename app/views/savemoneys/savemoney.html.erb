@@ -11,6 +11,9 @@
 </head>
 <body>
 	<%= render "navigation" %>
+	<% flash.each do |msg| %>
+			<div class="alert alert-info"><%=  msg[1] %></div>
+		<% end %>
 	<div id="dailyexpbox" style="">
 			<%= form_tag("/savemoney", method: "post",id:"dailyexpform") do %>
 						<h4>Save Money</h4>

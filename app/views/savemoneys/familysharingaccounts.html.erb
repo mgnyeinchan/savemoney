@@ -12,6 +12,10 @@
 </head>
 <body>
 	<%= render "navigation" %>
+	
+	<% flash.each do |msg| %>
+			<div class="alert alert-info"><%=  msg[1] %></div>
+		<% end %>
 	<div  style="margin:2% 5%;font-size: 24px;"><%= image_tag("sharing.png",style:"width:44px;") %>&nbspFamily sharing Accounts</div style="">
 	<% @tmp.each do |tmp| %>
 			<% savemoneys = Savemoney.where(:user_id => tmp).where('extract(month  from time) = ?',Time.now.month ) %>
