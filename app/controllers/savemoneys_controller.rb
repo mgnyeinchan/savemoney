@@ -27,7 +27,7 @@ class SavemoneysController < ApplicationController
   def assignshare
   	case params[:id]
   	when "1"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]) 
+  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   		savemoneys.each do |sm|
   			sm.showto1 = params[:showto1]
   			sm.save
@@ -41,7 +41,7 @@ class SavemoneysController < ApplicationController
 =end
   		redirect_to "/mysavingaccount"
   	when "2"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]) 
+  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   		savemoneys.each do |sm|
   			sm.showto2 = params[:showto2]
   			sm.save
@@ -55,7 +55,7 @@ class SavemoneysController < ApplicationController
 =end
   		redirect_to "/mysavingaccount"
   	else
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]) 
+  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   		savemoneys.each do |sm|
   			sm.showto3 = params[:showto3]
   			sm.save
@@ -73,7 +73,7 @@ class SavemoneysController < ApplicationController
   def removesharing
   	case params[:id]
   	when "1"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]) 
+  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   		savemoneys.each do |sm|
   			sm.showto1 = nil
   			sm.save
@@ -81,7 +81,7 @@ class SavemoneysController < ApplicationController
 
   		redirect_to "/mysavingaccount"
   	when "2"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]) 
+  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   		savemoneys.each do |sm|
   			sm.showto2 = nil
   			sm.save
@@ -89,7 +89,7 @@ class SavemoneysController < ApplicationController
   		
   		redirect_to "/mysavingaccount"
   	else
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]) 
+  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
   		savemoneys.each do |sm|
   			sm.showto3 = nil
   			sm.save
