@@ -14,105 +14,103 @@ class SavemoneysController < ApplicationController
   end
   def mysavingaccount
   	@savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  	@savemoney = Savemoney.find_by(user_id:session[:user]["id"])
+  	@fs = Familysharing.find_by(user_id:session[:user]["id"])
+    mysaving = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)
     @withdraw = Withdraw.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  	if @savemoney
-  		
-  	else
-  		flash[:savemoneyfirst] = "You need to save money first to view saving data."
-  		redirect_to "/savemoney"
-  	end
+  	if @fs.nil?
+      fs = Familysharing.new(user_id:session[:user]["id"])
+      fs.save
+      @fs = Familysharing.find_by(user_id:session[:user]["id"])
+    end
   	@users = User.all
   end
   def assignshare
+    fs = Familysharing.find_by(user_id:session[:user]["id"])
   	case params[:id]
   	when "1"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  		savemoneys.each do |sm|
-  			sm.showto1 = params[:showto1]
-  			sm.save
-  		end
-=begin
-  		savemoneys = Savemoney.where(:user_id => params[:showto1])
-  		savemoneys.each do |sm|
-  			sm.showby1 = session[:user]["id"]
-  			sm.save
-  		end
-=end
-  		redirect_to "/mysavingaccount"
+  		if fs.nil?
+        fs = Familysharing.new(user_id:session[:user]["id"],shareto1:params[:shareto1])
+        fs.save
+        redirect_to "/mysavingaccount"
+      else
+        fs.shareto1 = params[:shareto1]
+        fs.save
+        redirect_to "/mysavingaccount"
+      end
+  		
   	when "2"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  		savemoneys.each do |sm|
-  			sm.showto2 = params[:showto2]
-  			sm.save
-  		end
-=begin 		
-  		savemoneys = Savemoney.where(:user_id => params[:showto2])
-  		savemoneys.each do |sm|
-  			sm.showby2 = session[:user]["id"]
-  			sm.save
-  		end
-=end
-  		redirect_to "/mysavingaccount"
+  		
+  		if fs.nil?
+        fs = Familysharing.new(user_id:session[:user]["id"],shareto2:params[:shareto2])
+        fs.save
+        redirect_to "/mysavingaccount"
+      else
+        fs.shareto2 = params[:shareto2]
+        fs.save
+        redirect_to "/mysavingaccount"
+      end
+
+  		
   	else
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  		savemoneys.each do |sm|
-  			sm.showto3 = params[:showto3]
-  			sm.save
-  		end
-=begin  		
-  		savemoneys = Savemoney.where(:user_id => params[:showto3])
-  		savemoneys.each do |sm|
-  			sm.showby3 = session[:user]["id"]
-  			sm.save
-  		end
-=end
-  		redirect_to "/mysavingaccount"
+  		
+  		if fs.nil?
+        fs = Familysharing.new(user_id:session[:user]["id"],shareto3:params[:shareto3])
+        fs.save
+        redirect_to "/mysavingaccount"
+      else
+        fs.shareto3 = params[:shareto3]
+        fs.save
+        redirect_to "/mysavingaccount"
+      end
+  		
   	end
   end
   def removesharing
-  	case params[:id]
-  	when "1"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  		savemoneys.each do |sm|
-  			sm.showto1 = nil
-  			sm.save
-  		end
+  	fs = Familysharing.find_by(user_id:session[:user]["id"])
+    case params[:id]
+    when "1"
+      fs.shareto1 = nil
+      fs.save
+      redirect_to "/mysavingaccount"
+      
+    when "2"
+      
+      fs.shareto2 = nil
+      fs.save
+      redirect_to "/mysavingaccount"
 
-  		redirect_to "/mysavingaccount"
-  	when "2"
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  		savemoneys.each do |sm|
-  			sm.showto2 = nil
-  			sm.save
-  		end
-  		
-  		redirect_to "/mysavingaccount"
-  	else
-  		savemoneys = Savemoney.where(:user_id => session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month)  
-  		savemoneys.each do |sm|
-  			sm.showto3 = nil
-  			sm.save
-  		end
-  		
-  		redirect_to "/mysavingaccount"
-  	end 
+      
+    else
+      
+      fs.shareto3 = nil
+      fs.save
+      redirect_to "/mysavingaccount"
+      
+    end 
 
   end
   def familysharingaccounts
   		@savemoneys = Savemoney.where(:showto1=>session[:user]["id"]).where('extract(month  from time) = ?',Time.now.month )
-  		@tmp = []
-  		@savemoneys.each do |sm|
-			if @tmp.length == 0
-				@tmp = @tmp.push(sm.user_id)
-			else
-				if @tmp.last == sm.user_id
-  				
-  				else
-  					@tmp = @tmp.push(sm.user_id)
-  				end
-			end
-  		end
+      @fs = Familysharing.where(:shareto1=>session[:user]["id"])
+      @tmp = []
+      @fs.each do |fs|
+        if @tmp.length == 0
+          @tmp = @tmp.push(fs.user_id)
+        else
+          tmp2 = 0
+          @tmp.each do |tmp|
+            
+            if tmp == fs.user_id
+              tmp2 = 1
+            else
+                
+            end
+          end
+          if tmp2 == 0
+              tmp = @tmp.push(fs.user_id)
+          end
+        end
+      end
   end
   def withdraw
     

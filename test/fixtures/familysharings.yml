@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  shareto1: 1
+  shareto2: 1
+  shareto3: 1
+  shareto4: 1
+  shareto5: 1
+
+two:
+  user_id: 1
+  shareto1: 1
+  shareto2: 1
+  shareto3: 1
+  shareto4: 1
+  shareto5: 1

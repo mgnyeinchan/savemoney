@@ -64,7 +64,7 @@
 	<% @withdraw.each do |withdraw| %>
 		<% withdrawtotal += withdraw.amount.to_i %>
 	<% end %>	
-
+	<% balance = total.to_i - withdrawtotal.to_i %>
 	<div class="dailyexpbox">
 		<h4 class="bg-warning" style="padding: 2%;">My Saving Account</h4>
 		<div class="row">
@@ -76,9 +76,9 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-4">
-									<% if @savemoney.showto1 %>
+									<% unless @fs.shareto1.nil? %>
 									<i class="fa fa-share-alt-square text-success" style="font-size: 28px;"></i>&nbsp
-											<% user1 = User.find(@savemoney.showto1) %>
+											<% user1 = User.find(@fs.shareto1) %>
 											<span class="text-success" style="font-size: 18px;"><%= user1.name %>&nbsp&nbsp</span>
 											<hr>
 											<a style="text-decoration:none;" href="/removesharing/1">
@@ -90,7 +90,7 @@
 										Share To 
 										<hr>
 										<%= form_tag("/assignshare/1", method: "post",id:"assignform1") do %>
-										<select name="showto1" class="form-control btn btn-default sharetobtn" onchange="assignform1()">
+										<select name="shareto1" class="form-control btn btn-default sharetobtn" onchange="assignform1()">
 											<option>&nbspSelect user</option>
 											<% @users.each do |user| %>
 												<option value="<%= user.id %>"><%= user.name %></option>
@@ -100,9 +100,9 @@
 									<% end %>	
 								</div>
 								<div class="col-4">
-									<% if @savemoney.showto2 %>
+									<% unless @fs.shareto2.nil? %>
 									<i class="fa fa-share-alt-square text-success" style="font-size: 28px;"></i>&nbsp
-											<% user1 = User.find(@savemoney.showto2) %>
+											<% user1 = User.find(@fs.shareto2) %>
 											<span class="text-success" style="font-size: 18px;"><%= user1.name %>&nbsp&nbsp</span>
 											<hr>
 											<a style="text-decoration:none;" href="/removesharing/2">
@@ -114,7 +114,7 @@
 										Share To 
 										<hr>
 										<%= form_tag("/assignshare/2", method: "post",id:"assignform2") do %>
-										<select name="showto2" class="form-control btn btn-default sharetobtn" onchange="assignform2()">
+										<select name="shareto2" class="form-control btn btn-default sharetobtn" onchange="assignform2()">
 											<option>&nbspSelect user</option>
 											<% @users.each do |user| %>
 												<option value="<%= user.id %>"><%= user.name %></option>
@@ -124,9 +124,9 @@
 									<% end %>	
 								</div>
 								<div class="col-4">
-									<% if @savemoney.showto3 %>
+									<% unless @fs.shareto3.nil? %>
 									<i class="fa fa-share-alt-square text-success" style="font-size: 28px;"></i>&nbsp
-											<% user1 = User.find(@savemoney.showto3) %>
+											<% user1 = User.find(@fs.shareto3) %>
 											<span class="text-success" style="font-size: 18px;"><%= user1.name %>&nbsp&nbsp</span>
 											<hr>
 											<a style="text-decoration:none;" href="/removesharing/3">
@@ -138,7 +138,7 @@
 										Share To 
 										<hr>
 										<%= form_tag("/assignshare/3", method: "post",id:"assignform3") do %>
-										<select name="showto3" class="form-control btn btn-default sharetobtn" onchange="assignform3()">
+										<select name="shareto3" class="form-control btn btn-default sharetobtn" onchange="assignform3()">
 											<option>&nbspSelect user</option>
 											<% @users.each do |user| %>
 												<option value="<%= user.id %>"><%= user.name %></option>
@@ -155,32 +155,34 @@
 		</div>
 		<div class="col-md-6">
 			<div class="row">
-				<div class="col-6">
-					<div class="container" >
-					<div class="card" style="box-shadow: 4px 4px 8px #f2f2f2;width: 80%;height: 175px;">
-						<div style="position: relative;top: 50%;">
-							<div style="transform: translate(0,-100%);">
-								<div class="text-success" style="text-align: center;font-size: 28px;"><%= total %> Kyats</div>
-								
+				<div class="col-4">
+					<div class="box1" style="width: 90%;height: 175px;background-color: #f2f2f2;position: relative;">
+						<div class="text-success" style="font-size: 24px;text-align: center;position: relative;top: 50%;">
+							<div style="transform: translate(0,-125%);"><%= total %>
 							</div>
 						</div>
-						<div class="bg-success" style="text-align: center;color: white;position: absolute;bottom: 0;padding: 5px;">This Month Saving Mount</div>
+						<div class="bg-success" style="position: absolute;bottom: 0;left: 0;right: 0;text-align: center;color: white;font-size: 18px;height:50px;"><div style="padding-top: 10px;"> Saving Amounts</div></div>
 					</div>
 				</div>
-				</div>
-				<div class="col-6">
-					<div class="container" >
-					<div class="card" style="box-shadow: 4px 4px 8px #f2f2f2;width: 80%;height: 175px;">
-						<div style="position: relative;top: 50%;">
-							<div style="transform: translate(0,-100%);">
-								<div class="text-success" style="text-align: center;font-size: 28px;"><%= withdrawtotal %> Kyats</div>
-								
+				<div class="col-4">
+					<div class="box1" style="width: 90%;height: 175px;background-color: #f2f2f2;position: relative;">
+						<div class="text-danger" style="font-size: 24px;text-align: center;position: relative;top: 50%;">
+							<div style="transform: translate(0,-125%);"><%= withdrawtotal %>
 							</div>
 						</div>
-						<div class="bg-danger" style="text-align: center;color: white;position: absolute;bottom: 0;padding: 5px;">This Month Saving Mount</div>
+						<div class="bg-danger" style="position: absolute;bottom: 0;left: 0;right: 0;text-align: center;color: white;font-size: 18px;height:50px;"><div style="padding-top: 10px;"> Expense Amounts</div></div>
 					</div>
 				</div>
+				<div class="col-4">
+					<div class="box1" style="width: 90%;height: 175px;background-color: #f2f2f2;position: relative;">
+						<div class="text-warning" style="font-size: 24px;text-align: center;position: relative;top: 50%;">
+							<div style="transform: translate(0,-125%);"><%= balance %>
+							</div>
+						</div>
+						<div class="bg-warning" style="position: absolute;bottom: 0;left: 0;right: 0;text-align: center;color: white;font-size: 18px;height:50px;"><div style="padding-top: 10px;"> Balance Amounts</div></div>
+					</div>
 				</div>
+				
 			</div>
 		</div>	
 		</div>		

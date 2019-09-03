@@ -22,43 +22,108 @@
 			<div>
 				<% user = User.find(tmp) %>
 				<div class="dailyexpbox" style="">
-				<h5 class="bg-info" style="padding: 2%;color: white"><i class="fa fa-user" style="font-size: 28px;color:white"></i>&nbsp<%= user.name %></h5>
-		
-				<div class="row " style="padding: 1%;background-color: #f2f2f2;margin-top: -12px;">
-							
-							<div class="col-4">
+					<h5 class="bg-info" style="padding: 2%;color: white"><i class="fa fa-user" style="font-size: 28px;color:white"></i>&nbsp<%= user.name %></h5>
+						<h4 class="text-success" style="padding: 0 10px 10px 10px;">Saving Amounts</h4>
+					<div style="margin:0 40px;">
+						<div class="row " style="padding: 1%;background-color: #f2f2f2;">
+							<div class="col-3">
+								<b>No</b>
+							</div>
+							<div class="col-3">
 								<b>Description</b>
 							</div>
-							<div class="col-4">
+							<div class="col-3">
 								<b>Amount</b>
 							</div>
-							<div class="col-4">
+							<div class="col-3">
 								<b>Date</b>
 							</div>
-				</div>
-				<% savemoneys.each do |sm| %>
+						</div>
+						<% no = 0 %>
+						<% total = 0 %>
+						<% savemoneys.each do |sm| %>
+						<% total += sm.amount %>
+						<% no += 1 %>
 						<div class="row " style="padding: 1%;background-color: white;">
-							
-							<div class="col-4">
-								<% if sm.description == "" %>
-									nil
-								<% else %>
-									<%= sm.description %>
-								<% end %>
+							<div class="col-3">
+								<%= no %>
 							</div>
-							<div class="col-4">
+							<div class="col-3">
+								<%= sm.description %>
+							</div>
+							<div class="col-3">
 								<%= sm.amount %>
 							</div>
-							<div class="col-4">
+							<div class="col-3">
 								<%= sm.time %>
 							</div>
 						</div>
-						
-					
-				<% end %>
+						<% end %>
+						<div class="row bg-success " style="padding: 1%;border-top: 1px solid #f2f2f2;color:white;">
+							<div class="col-6">
+								Total
+							</div>
+							<div class="col-3">
+								<%= total %>
+							</div>
+							<div class="col-3">
+							</div>
+						</div>
+					</div>
+					<hr style="border:1px solid grey;">
+					<h4 class="text-danger" style="padding: 0 10px 10px 10px;">Saving Amounts</h4>
+					<% @withdraw = Withdraw.where(:user_id => tmp).where('extract(month  from time) = ?',Time.now.month)  
+	    			%>
+						    <div style="margin: 0 40px 40px 40px;">
+								<div class="row " style="padding: 1%;background-color: #f2f2f2f2;">
+									<div class="col-3">
+										<b>No</b>
+									</div>
+									<div class="col-3">
+										<b>Description</b>
+									</div>
+									<div class="col-3">
+										<b>Amount</b>
+									</div>
+									<div class="col-3">
+										<b>Date</b>
+									</div>
+								</div>
+								<% no = 0 %>
+								<% withdrawtotal = 0 %>
+								<% @withdraw.each do |withdraw| %>
+								<% withdrawtotal += withdraw.amount.to_i %>
+								<% no += 1 %>
+								<div class="row " style="padding: 1%;">
+									<div class="col-3" style="">
+										<%= no %>
+									</div>
+									<div class="col-3" style="">
+										<%= withdraw.description %>
+									</div>
+									<div class="col-3" style="">
+										<%= withdraw.amount %>
+									</div>
+									<div class="col-3" style="">
+										<%= withdraw.time %>
+									</div>
+								</div>
+								<% end %>
+								<div class="row bg-danger " style="padding: 1%;border-top: 1px solid #f2f2f2;color: white;">
+									<div class="col-6">
+										Total
+									</div>
+									<div class="col-3">
+										<%= withdrawtotal %>
+									</div>
+									<div class="col-3">
+									</div>
+								</div>
+							</div>
+					</div>
 				</div>
-			</div>
 			<hr>
+
 	<% end %>
 </body>
 </html>
