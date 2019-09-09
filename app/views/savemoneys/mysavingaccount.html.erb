@@ -55,6 +55,9 @@
 </head>
 <body>
 	<%= render "navigation" %>
+	<% flash.each do |msg| %>
+			<div class="alert alert-info"><%=  msg[1] %></div>
+		<% end %>
 	<% total = 0 %>
 	<% @savemoneys.each do |sm| %>
 		<% total += sm.amount %>
