@@ -19,10 +19,65 @@
 </head>
 <body>
 	<%= render "navigation" %>
+	<div style="padding:0;margin: 1% 5%;overflow: hidden;">
+		<h4 class="bg-info" style="padding: 1%;"> Search By</h4>
+		<div class="row" style="margin: 0;">
+			<div class="col-3" style="">
+				<div style="width: 100%;background-color: #DDD;padding:10px;">
+				<label>Day</label>
+				<%= form_tag("/expensereports", method: "post",id:"byday") do %>
+					
+					<input type="date" class="form-control" name="byday" onchange="document.getElementById('byday').submit()">
+					
+				<% end %>
+				</div>
+			</div>
+			<div class="col-3" style="">
+				<div style="width: 100%;background-color: #DDD;padding:10px;">
+				<label>Month</label>
+				<%= form_tag("/expensereports", method: "post",id:"bymonth") do %>
+					
+					
+					
+					<select name="bymonth" class="form-control"  onchange="document.getElementById('bymonth').submit()">
+						<option>Select Year</option>
+						<option value="1">January</option>
+						<option value="2">February</option>
+						<option value="3">March</option>
+						<option value="4">April</option>
+						<option value="5">May</option>
+						<option value="6">June</option>
+						<option value="7">July</option>
+						<option value="8">August</option>
+						<option value="9">September</option>
+						<option value="10">October</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
+					</select>
+				<% end %>
+				</div>
+			</div>
+			<div class="col-3" style="">
+				<div style="width: 100%;background-color: #DDD;padding:10px;">
+				<label>Year</label>
+				<%= form_tag("/expensereports", method: "post",id:"byyear") do %>
+					
+					
+					<select name="byyear" class="form-control"  onchange="document.getElementById('byyear').submit()">
+						<option>Select Year</option>
+						<% for y in Time.now.year.downto(2010) do %>
+							<option value="<%=y%>"><%= y%></option>
+						<% end %>
+					</select>
+				<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="dailyexpbox">
-		<h4 class="bg-warning" style="padding: 2%;">Today Other Expense Report</h4>
+		<h4 class="bg-success" style="padding: 2%;"> Other Expense Report</h4>
 		<div class="row " style="padding: 1%;">
-			<div class="col-8">
+			<div class="col-6">
 				<b>Description</b>
 			</div>
 			<div class="col-2">
@@ -31,29 +86,35 @@
 			<div class="col-2">
 				<b>Assigned By</b>
 			</div>
+			<div class="col-2">
+				<b>Date</b>
+			</div>
 		</div>
-		<% @todayexps.each do |todayexp| %>
-		<input type="hidden" class="description" name="" value="<%= todayexp.description %>">
+		<% @exps.each do |exp| %>
+		<input type="hidden" class="description" name="" value="<%= exp.description %>">
 	
 		<div class="row" style="background-color: white;padding: 1%;">
-			<div class="col-8">
+			<div class="col-6">
 				<p class="demo"></p>
 			</div>
 			<div class="col-2">
-				<%= todayexp.amount %>
+				<%= exp.amount %>
 			</div>
 			<div class="col-2">
-				<%= todayexp.user.name %>
+				<%= exp.user.name %>
+			</div>
+			<div class="col-2">
+				<%= exp.time %>
 			</div>
 		</div>
 		<% end %>
 		<% @totalexpamount = 0 %>
-		<% @todayexps.each do |todayexp| %>
-			<% @totalexpamount += todayexp.amount %>
+		<% @exps.each do |exp| %>
+			<% @totalexpamount += exp.amount %>
 		<% end %>
 		
-		<div class="row bg-danger" style="padding: 1%;color: white;" >
-			<div class="col-8">
+		<div class="row " style="padding: 1%;background-color:#DDD;color:green;" >
+			<div class="col-6">
 				Total Amount
 			</div>
 			<div class="col-2">
@@ -66,7 +127,7 @@
 	</div>
 	<hr>
 	<div class="dailyexpbox">
-		<h4 class="bg-warning" style="padding: 2%;">Today Expense Report in advance</h4>
+		<h4 class="bg-success" style="padding: 2%;"> Expense Report in advance</h4>
 		<div class="row " style="padding: 1%;">
 			<div class="col-3">
 				<b>Description</b>
@@ -81,36 +142,36 @@
 				<b>Assigned By</b>
 			</div>
 			<div class="col-2">
-				<b>Time</b>
+				<b>Date</b>
 			</div>
 		</div>
-		<% @todayexpfadvs.each do |todayexpfadv| %>
-		<input type="hidden" class="description" name="" value="<%= todayexpfadv.description %>">
+		<% @expfadvs.each do |expfadv| %>
+		<input type="hidden" class="description" name="" value="<%= expfadv.description %>">
 	
 		<div class="row" style="background-color: white;padding: 1%;">
 			<div class="col-3">
 				<p class="demo"></p>
 			</div>
 			<div class="col-2">
-				<%= todayexpfadv.amount %>
+				<%= expfadv.amount %>
 			</div>
 			<div class="col-3">
-				<%= todayexpfadv.advance.description %>
+				<%= expfadv.advance.description %>
 			</div>
 			<div class="col-2">
-				<%= todayexpfadv.user.name %>
+				<%= expfadv.user.name %>
 			</div>
 			<div class="col-2">
-				<%= todayexpfadv.time %>
+				<%= expfadv.time %>
 			</div>
 		</div>
 		<% end %>
 		<% @totalexpfadvamount = 0 %>
-		<% @todayexpfadvs.each do |todayexpfadv| %>
-			<% @totalexpfadvamount += todayexpfadv.amount %>
+		<% @expfadvs.each do |expfadv| %>
+			<% @totalexpfadvamount += expfadv.amount %>
 		<% end %>
 		
-		<div class="row bg-danger" style="padding: 1%;color: white;" >
+		<div class="row " style="padding: 1%;background-color:#DDD;color:green;" >
 			<div class="col-3">
 				Total Amount
 			</div>
@@ -141,7 +202,7 @@
 	<% end %>
 
 	<div class="dailyexpbox">
-		<h4 class="bg-warning" style="padding: 2%;">This Month Expense Report</h4>
+		<h4 class="bg-success" style="padding: 2%;">This Month Total Expense Report</h4>
 		<div class="row " style="padding: 1%;">
 			<div class="col-2">
 				<b>Total Advance</b>
@@ -159,17 +220,17 @@
 				<b>Total Expense</b>
 			</div>
 			<div class="col-2">
-				<b>Today Date</b>
+				<b> Date</b>
 			</div>
 		</div>
 		
 		
-		<div class="row bg-danger" style="padding: 1%;color: white;" >
+		<div class="row " style="padding: 1%;background-color:#DDD;color:green;" >
 			<div class="col-2">
 				<%= @totaladvance %>
 			</div>
 			<div class="col-2">
-				<%= @totalbalinadvance %>
+				<%= @totaladvance - @totalexpfadvamount %>
 			</div>
 			<div class="col-2">
 				<%= @totalexpfadvamount %>

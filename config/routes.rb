@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   #reports
   get "/advancereports",to:"advances#advancereports"
   get "/expensereports",to:"dailyexps#expensereports"
+  post "/expensereports",to:"dailyexps#expensereports"
   get "/monthlyauditreports",to:"monthlyaudits#monthlyauditreports"
 
   #audit

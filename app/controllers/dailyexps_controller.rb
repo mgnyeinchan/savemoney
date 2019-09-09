@@ -31,11 +31,37 @@ class DailyexpsController < ApplicationController
 		
 		@advance = Advance.where('extract(month  from time) = ?',Time.now.month )
 
-		@todayexps = Dailyexp.where(:time => DateTime.now.to_date)
-		@todayexpfadvs = Dailyexpfadv.where(:time => DateTime.now.to_date)
+		@exps = Dailyexp.where('extract(month  from time) = ?',Time.now.month )
+		@expfadvs = Dailyexpfadv.where('extract(month  from time) = ?',Time.now.month )
 
 		@thismonthexps = Dailyexp.where('extract(month  from time) = ?',Time.now.month )
 		@thismonthexpfadvs = Dailyexpfadv.where('extract(month  from time) = ?',Time.now.month )
+		if params[:byday]
+			datearr = params[:byday].to_s.split("-")
+			
+			@advance = Advance.where('extract(month  from time) = ?',datearr[1].to_i )
+			@exps = Dailyexp.where(:time => params[:byday])
+			@expfadvs = Dailyexpfadv.where(:time => params[:byday])
 
+			@thismonthexps = Dailyexp.where(:time => params[:byday])
+			@thismonthexpfadvs = Dailyexpfadv.where(:time => params[:byday])
+		end
+		if params[:bymonth]
+			@advance = Advance.where('extract(month  from time) = ?',params[:bymonth] )
+			@exps = Dailyexp.where('extract(month  from time) = ?',params[:bymonth] )
+			@expfadvs = Dailyexpfadv.where('extract(month  from time) = ?',params[:bymonth] )
+
+			@thismonthexps = Dailyexp.where('extract(month  from time) = ?',params[:bymonth] )
+			@thismonthexpfadvs = Dailyexpfadv.where('extract(month  from time) = ?',params[:bymonth] )
+		end
+		if params[:byyear]
+			@advance = Advance.where('extract(year  from time) = ?',params[:byyear] )
+
+			@exps = Dailyexp.where('extract(year  from time) = ?',params[:byyear] )
+			@expfadvs = Dailyexpfadv.where('extract(year  from time) = ?',params[:byyear] )
+
+			@thismonthexps = Dailyexp.where('extract(year  from time) = ?',params[:byyear] )
+			@thismonthexpfadvs = Dailyexpfadv.where('extract(year  from time) = ?',params[:byyear] )
+		end
 	end
 end
